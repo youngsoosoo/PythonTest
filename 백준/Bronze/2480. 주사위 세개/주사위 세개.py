@@ -10,9 +10,4 @@ elif A==B or B==C :
 elif A==C:
   print(1000 + A * 100)
 else :
-  if A>B and A>C:
-    print(A*100)
-  elif B>A and B>C :
-    print(B*100)
-  else:
-    print(C*100)
+  print(max(A,B,C)*100)
