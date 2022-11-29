@@ -1,11 +1,5 @@
 S = input()
+A = list(range(97, 123)) #아스키코드 숫자 범위
 
-arr=[-1] * 26
-for i in range(0, len(S)):
-  for j in range(0, 26):
-    if arr[j] == -1:
-      if S[i] == chr(j+97):
-        arr[j] = i
-
-for i in range(0, 26):
-  print(arr[i], end=' ')
+for i in A :
+  print(S.find(chr(i)), end=" ")
