@@ -7,19 +7,13 @@ def isPrime(a):
   return True
 
 t = int(input())
-for _ in range(0,t):
+for _ in range(t):
   n = int(input())
-  a=[]
-  arr=[]
-  if isPrime(n//2):
-    print(n//2, n//2)
-  else :
-    for i in range(2, n):
-      if isPrime(i):
-        a.append(i)
-    for i in a:
-      if isPrime(n-i) and n-2*i>0:
-        arr.append(n-2*i)
-    if len(arr)>0:
-      c = (n-min(arr))//2
-      print(c, n-c)
+  b, c = n//2, n//2
+  while b>0:
+    if isPrime(b) and isPrime(c):
+      print(b, c)
+      break
+    else:
+      b -= 1
+      c += 1
