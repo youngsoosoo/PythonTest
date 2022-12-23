@@ -1,5 +1,4 @@
 import sys
-from math import factorial
 input = sys.stdin.readline
 
 def cnt(a,b) :
