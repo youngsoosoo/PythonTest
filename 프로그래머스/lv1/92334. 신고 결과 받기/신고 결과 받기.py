@@ -9,9 +9,8 @@ def solution(id_list, report, k):
         graph[id_list.index(report[i][0])].add(report[i][1])
         dic[report[i][1]].append(id_list.index(report[i][0]))
     
-
     for i in id_list:
-        if len(dic[i]) >= k:
+        if len(dic[i]) > 1:
             for j in dic[i]:
                 answer[j]+=1
 
