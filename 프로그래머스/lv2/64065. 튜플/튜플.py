@@ -14,9 +14,9 @@ def solution(s):
     if len(result) == 1:
         return result[0]
     answer = [result[0][0]]
-    for i in range(1, len(result)):
+    for i in range(len(result)):
         for j in result[i]:
-            if j not in result[i-1]:
+            if j not in answer:
                 answer.append(j)
         
     return answer
