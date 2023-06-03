@@ -22,17 +22,20 @@ def gameStart(board, colboard, cnt):
     # 가로
     for i in range(3):
         if Counter(board[i])['O'] == 3 or Counter(colboard[i])['O'] == 3:
-            resultO += 1
+            resultO = 1
         if Counter(board[i])['X'] == 3 or Counter(colboard[i])['X'] == 3:
-            resultX += 1
+            resultX = 1
 
     # 대각선
     for i in range(0, 3, 2):
+        print(i)
         if board[0][i] == board[1][1] == board[2][2-i] == 'O':
-            resultO += 1
+            resultO = 1
         if board[0][i] == board[1][1] == board[2][2-i] == 'X':
-            resultX += 1
-    
+            resultX = 1
+    # 1. O와 X가 모두 3개일 때
+    # 2. X가 3개라 끝났지만 O는 4개일 때(게임이 종료되어야 하는데 이후 지속)
+    # 3. O가 3개라 끝났지만 X의 개수가 O와 같을 때(게임이 종료되어야 하는데 이후 지속)
     if resultO and resultX or resultX and cnt or resultO and not cnt:
         return 0
     return 1
@@ -46,15 +49,4 @@ def solution(board):
     
     colboard = list(zip(*board))
     
-    answer = gameStart(board, colboard, cnt)
-    print(answer)
-    dic = {'O':0, 'X':0}
-    for x in range(3):
-        for y in range(3):
-            if board[x][y] != '.':
-                dic[board[x][y]] += 1
-    
-    if dic['X'] > dic['O'] or (dic['O'] - dic['X'] not in [0, 1]):
-        answer = 0
-    
-    return answer
+    return gameStart(board, colboard, cnt)
