@@ -1,34 +1,54 @@
-# 프림
-
-import sys, heapq
+import sys
 input = sys.stdin.readline
 
+# 크루스칼
+
+# 1. 모든 링크를 한 번에 가져온다.
+# 2. 링크를 연결하면서 같은 집합으로 만들어준다.
+# 3. 만약에 이미 같은 집합이라면 연결하지 않는다.
+
+# union 최적화!
+def _find(x):
+	while par[x] != x: # 루트가 아니라면
+		x = par[x]
+	return x
+	
+def _union(a, b):
+	a = _find(a)
+	b = _find(b)
+	
+	if a == b:
+		return
+	
+	if rank[a] < rank[b]:
+		par[a] = b
+	elif rank[b] < rank[a]:
+		par[b] = a
+	else:
+		par[a] = b
+		rank[b] += 1
+
 N, M = map(int, input().split())
-graph = [[] for _ in range(N+1)]
-visited = [0 for i in range(N+1)]
 
-for _ in range(M):
-	A, B, C = map(int, input().split())
-	graph[A].append([C, B])
-	graph[B].append([C, A])
+link = [list(map(int, input().split())) for _ in range(M)]
+link.sort(key = lambda x:x[2]) # 가중치를 기준으로 정렬
+
+par = [i for i in range(1_000_001)]
+rank = [0 for _ in range(1_000_001)]
+
+ans = 0
+
+for i in range(M):
+	A = link[i][0]
+	B = link[i][1]
+	weight = link[i][2]
 	
-# 다익스트라!
-q = [[0, 1]] # 1에서 출발할 거다. 가중치 없이
-answer = 0
-cnt = 0
-
-while q:
-	if cnt == N:
-		break
-		
-	weight, node = heapq.heappop(q) # 최소 비용을 꺼내줄겁니다.
+	A = _find(A)
+	B = _find(B)
 	
-	# [node, weight] 작은 노드부터 탐색
-	if visited[node] == 0:
-		answer += weight
-		visited[node] = 1
-		cnt+=1
-		for nxt in graph[node]:
-			heapq.heappush(q, nxt)
-
-print(answer)
+	if A == B:
+		continue
+	else:
+		_union(A, B)
+		ans += weight
+print(ans)
