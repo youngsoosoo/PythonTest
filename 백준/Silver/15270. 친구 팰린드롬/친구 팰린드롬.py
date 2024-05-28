@@ -16,12 +16,10 @@ def dfs(idx, ans, visited):
 	if fri[idx][0] in visited or fri[idx][1] in visited:
 		dfs(idx+1, ans, visited)
 	else:
-		dfs(idx+1, ans+1, visited + fri[idx])
+		dfs(idx+1, ans+2, visited + fri[idx])
 		dfs(idx+1, ans, visited)
 
 dfs(0, 0, [])
-
-answer*=2
 
 if answer < n:
 	answer+=1
