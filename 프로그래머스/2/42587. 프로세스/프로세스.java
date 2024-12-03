@@ -4,24 +4,22 @@ class Solution {
     public int solution(int[] priorities, int location) {
         int answer = 0;
         
-        PriorityQueue<Integer> q = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+		
+		for(int num : priorities) {
+			pq.add(num);
+		}
         
-        for (int i : priorities) {
-            q.offer(i);
-        }
-        
-        while (!q.isEmpty()) {
-            for (int i=0; i < priorities.length; i++) {
-                if (q.peek() == priorities[i]){
-                    q.poll();
-                    answer++;
-                    
-                    if (location == i) {
-                        return answer;
-                    }
-                }
-            }
-        }
+		while(!pq.isEmpty()) {
+			for(int i=0; i<priorities.length; i++) {
+				if(priorities[i] == pq.peek()) {
+					pq.poll();
+					answer++;
+					if(i == location)
+						return answer;
+				}
+			}
+		}
         
         return answer;
     }
