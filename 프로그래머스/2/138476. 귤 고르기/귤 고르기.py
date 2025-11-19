@@ -1,13 +1,19 @@
-from collections import Counter
 def solution(k, tangerine):
     answer = 0
+    cnt = 0
     
-    counter = Counter(tangerine)
-    sorted_keys = [key for key, _ in counter.most_common()]
-    for i in sorted_keys:
-        if k <= 0:
-            break
-        k -= counter[i]
-        answer+=1
+    dic = {}
+    
+    for i in tangerine:
+        dic[i] = dic.get(i, 0) + 1
+            
+    dicItems = sorted(dic.values(), reverse=True)
+    
+    for i in dicItems:
+        if (cnt >= k):
+            return answer
         
+        cnt += i
+        answer += 1
+    
     return answer
