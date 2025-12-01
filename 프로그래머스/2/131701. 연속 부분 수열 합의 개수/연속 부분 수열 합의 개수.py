@@ -1,10 +1,12 @@
 def solution(elements):
     
     setList = set()
-    newElements = elements * 2
     
-    for i in range(1, len(elements)+1):
-        for j in range(1, len(elements)+1):
-            setList.add(sum(newElements[i:i+j]))
+    for i in range(len(elements)):
+        answer = elements[i]
+        setList.add(answer)
+        for j in range(i+1, i + len(elements)):
+            answer += elements[j%len(elements)]
+            setList.add(answer)
     
     return len(setList)
