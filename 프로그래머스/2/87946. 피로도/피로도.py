@@ -1,27 +1,25 @@
+answer = 0
+n = 0
+visited = []
+
 def solution(k, dungeons):
-    answer = 0
+    global n, visited
+    
     n = len(dungeons)
-    for i in range(n):
-        visited = [0] * n
-        answer = max(answer, dfs(i, visited, k, dungeons, 0))
+    visited = [0] * n
+    
+    dfs(k, 0, dungeons)
     
     return answer
 
 
-def dfs(idx, visited, k, dungeons, answer):
+def dfs(k, cnt, dungeons):
+    global answer
+    if cnt > answer:
+        answer = cnt
     
-    if not (k >= dungeons[idx][0] and k-dungeons[idx][1] >= 0):
-        return 0
-    
-    
-    visited[idx] = 1
-    answer += 1
-    k -= dungeons[idx][1]
-    max_answer = answer
-    
-    
-    for i in range(len(visited)):
-        if visited[i] == 0:
-            max_answer = max(max_answer, dfs(i, visited[:], k, dungeons, answer))
-        
-    return max_answer
+    for j in range(n):
+        if k >= dungeons[j][0] and not visited[j]:
+            visited[j] = 1
+            dfs(k - dungeons[j][1], cnt + 1, dungeons)
+            visited[j] = 0
