@@ -1,27 +1,36 @@
 from collections import deque
 def solution(maps):
-    answer = -1
-    len_maps = len(maps)
-    len_m = len(maps[0])
     
-    visited = [[0 for i in range(len_m)] for i in range(len_maps)]
+    if not maps[0][0]:
+        return -1
     
+    n, m = len(maps), len(maps[0])
+    
+    visited = [[False] * m for _ in range(n)]
+    visited[0][0] = True
+    
+    # 상, 하, 좌, 우
     d = [(1, 0), (-1, 0), (0, -1), (0, 1)]
     
-    visited[0][0] = 1
-    q = deque([[0, 0]])
+    q = deque()
+    q.append((0, 0, 1))
+    
     while q:
-        x, y = q.popleft()
+        x, y, z = q.popleft()
+        
+        
+        # 맵의 끝에 도달했을 때
+        if x == n-1 and y == m-1:
+            return z
         
         for dx, dy in d:
             nx = x + dx
             ny = y + dy
             
-            if 0 <= nx < len_maps and 0 <= ny < len_m and maps[nx][ny]:
-                if not visited[nx][ny] or visited[x][y] + 1 < visited[nx][ny]:
-                    visited[nx][ny] = visited[x][y] + 1
-                    q.append([nx, ny])
+            if 0 <= nx < n and 0 <= ny < m and maps[nx][ny] == 1:
+                if not visited[nx][ny]:
+                    visited[nx][ny] = True
+                    q.append((nx, ny, z + 1))
+                    
     
-    if visited[len_maps-1][len_m-1]:
-        answer = visited[len_maps-1][len_m-1]
-    return answer
+    return -1
